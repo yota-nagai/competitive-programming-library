@@ -8,7 +8,7 @@ cum=[[0]*(W+1)]
 for i in range(H):
     r=[0]
     for j in range(W):
-        r.append(r[-1]+cum[i][j])
+        r.append(r[-1]+X[i][j])
     cum.append(r)
 
 for w in range(0,W+1):
