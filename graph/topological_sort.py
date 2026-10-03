@@ -17,7 +17,9 @@ def topological_sort(graph):
     topological=[]
     cnt=0
     while len(stack)>0:
-        i=stack.pop()  # ここで len(stack)>1 ならばトポロジカルソートが一意に定まらない
+        # if len(stack)>1:
+        #     トポロジカルソートが一意に定まらない
+        i=stack.pop() 
         cnt+=1
         topological.append(i)
         for j in graph[i]:
