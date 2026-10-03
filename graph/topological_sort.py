@@ -1,5 +1,6 @@
 # トポロジカルソート
-# サイクルが含まれるかの判定（DAGかどうか）としても機能：サイクルが含まれる場合はFalseを返す
+# 有向グラフにおいて, サイクルが含まれるかの判定としても機能：サイクルが含まれる場合はFalseを返す
+# グラフGはサイクルの無い有向グラフ（DAG）である ⇔ グラフGはトポロジカルソート可能
 
 def topological_sort(graph):
     N=len(graph)
@@ -16,7 +17,7 @@ def topological_sort(graph):
     topological=[]
     cnt=0
     while len(stack)>0:
-        i=stack.pop()
+        i=stack.pop()  # ここで len(stack)>1 ならばトポロジカルソートが一意に定まらない
         cnt+=1
         topological.append(i)
         for j in graph[i]:
