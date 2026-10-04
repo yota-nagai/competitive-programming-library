@@ -3,30 +3,17 @@
 # 返り値：統合後の区間リスト
 
 def union_of_interval(LR):
-    A=[]
-    for l,r in LR:
-        A.append((l,1))
-        A.append((r,-1))
-    A.sort()
-
-    B=[A[0]]
-    for i in range(1,len(A)):
-        if A[i][0]==B[-1][0]:
-            B[-1]=(B[-1][0],B[-1][1]+A[i][1])
+    LR.sort()
+    res=[]
+    left,right=LR[0]
+    for l,r in LR[1:]:
+        if l<=right:
+            right=max(right,r)
         else:
-            B.append(A[i])
-
-    res=[(B[0][0],None)]
-    cnt=B[0][1]
-    for i in range(1,len(B)):
-        if cnt+B[i][1]==0:
-            res[-1]=(res[-1][0],B[i][0])
-            if i<len(B)-1:
-                res.append((B[i+1][0],None))
-        cnt+=B[i][1]
-
+            res.append((left,right))
+            left,right=l,r
+    res.append((left,right))
     return res
-
 
 
 N=int(input())
