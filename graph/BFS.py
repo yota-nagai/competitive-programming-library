@@ -1,9 +1,11 @@
 from collections import deque
 
-def bfs(s):
-    dist[s]=0
+# 頂点番号は 0-indexed で統一 #
+
+def bfs(start):
+    dist[start]=0
     dq=deque()
-    dq.append(s)
+    dq.append(start)
     while len(dq)>0:
         i=dq.popleft()
         for j in graph[i]:
@@ -17,14 +19,14 @@ def restore_path(start,goal):
     path=[]
     i=goal
     while True:
-        path.append(i+1)
+        path.append(i)
         if i==start:
             break
         i=previous_node[i]
     return list(reversed(path))
 
 
-
+# ----------------------------------------------------------------------------------
 N,M=map(int,input().split())
 graph=[[] for _ in range(N)]
 for _ in range(M):
@@ -35,6 +37,6 @@ for _ in range(M):
     graph[b].append(a)  #無向グラフの場合のみ
     
 dist=[-1]*N
-previous_node=[-1]*N
+previous_node=[-1]*N  #経路復元用
 
 #dist[i]=-1ならばiへの到達不可能
