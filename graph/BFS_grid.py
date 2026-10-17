@@ -1,6 +1,6 @@
 from collections import deque,defaultdict
 
-# 座標は 0-indexd で統一 #
+# 座標は 0-indexed で統一 #
 
 def bfs(si,sj):
     dq=deque()
