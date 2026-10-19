@@ -5,6 +5,7 @@ class UnionFind():
         self.n = n
         self.parents = [-1 for i in range(n)]  # 各頂点の親番号(自身が根なら-1)を管理
         self.size = [1]*n  # 各頂点が属する根付き木の頂点数を管理
+        self.next_node=[i for i in range(n)]  # 同一グループ（根付き木）の頂点を巡回する際の, 次の頂点を管理
         # self.min_node=[i for i in range(n)]  # 各頂点が属する根付き木の頂点番号の最小値を管理
 
 	# xを含む根付き木の根番号を返す
@@ -34,6 +35,7 @@ class UnionFind():
 
         self.parents[y] = x
         self.size[x] += self.size[y]
+        self.next_node[x],self.next_node[y]=self.next_node[y],self.next_node[x]
         # self.min_node[x]=min(self.min_node[x],self.min_node[y])
         
 	# xが属する根付き木の要素数を返す
@@ -42,7 +44,12 @@ class UnionFind():
     
     # xが属す根付き木に属する要素をリストで返す
     def members(self, x):
-        return [i for i in range(self.n) if self.root(i) == self.root(x)]
+        res=[x]
+        i=self.next_node[x]
+        while i!=x:
+            res.append(i)
+            i=self.next_node[i]
+        return res
         
 	# すべての根の要素をリストで返す
     def roots(self):
@@ -68,4 +75,3 @@ class UnionFind():
     # all_group_membersの結果を文字列で返す
     def __str__(self):
 	    return '\n'.join(f'{r}: {m}' for r, m in self.all_group_members().items())
-    
