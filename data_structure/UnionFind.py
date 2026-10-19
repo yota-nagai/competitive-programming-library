@@ -6,6 +6,7 @@ class UnionFind():
         self.parents = [-1 for i in range(n)]  # 各頂点の親番号(自身が根なら-1)を管理
         self.size = [1]*n  # 各頂点が属する根付き木の頂点数を管理
         self.next_node=[i for i in range(n)]  # 同一グループ（根付き木）の頂点を巡回する際の, 次の頂点を管理
+        self.group_cnt=n  # グループの数（根付き木の数）
         # self.min_node=[i for i in range(n)]  # 各頂点が属する根付き木の頂点番号の最小値を管理
 
 	# xを含む根付き木の根番号を返す
@@ -36,6 +37,7 @@ class UnionFind():
         self.parents[y] = x
         self.size[x] += self.size[y]
         self.next_node[x],self.next_node[y]=self.next_node[y],self.next_node[x]
+        self.group_cnt-=1
         # self.min_node[x]=min(self.min_node[x],self.min_node[y])
         
 	# xが属する根付き木の要素数を返す
@@ -55,11 +57,9 @@ class UnionFind():
     def roots(self):
         return [i for i, x in enumerate(self.parents) if x == -1]
     
-    # 根付き木の数（連結成分の個数）を返す
-    # unite処理をすべて終えてから最後に1回連結成分の個数を出力する場合は group_count で良い（O(n)） だが,
-    # uniteなどを行うごとに連結成分の個数を知りたい場合は, 現時点での連結成分の個数を記録する変数cntを isSame を用いて更新していく方法（isSame==False --> cnt-=1）をとる
+    # グループの数（根付き木の数）を返す
     def group_count(self):
-        return len(self.roots())
+        return self.group_cnt
     
 	# {根番号:[その根付き木に含まれる要素のリスト],...}のdefaultdictを返す
     def all_group_members(self):
