@@ -19,18 +19,16 @@ def Power(a,b,mod):
 def Division(a,b,mod):
     return (a*Power(b,mod-2,mod))%mod
 
-#nCrをmodで割った余り
+#nCrをmodで割った余り（n>=r）
 def ncr(n,r,mod):
-    a=1  #n!をmodで割った余り
-    for i in range(1,n+1):
+    r=min(r,n-r)
+    a=1  # n(n-1)...(n-r+1) をmodで割った余り
+    for i in range(n-r+1,n+1):
         a*=i
         a%=mod
 
-    b=1  #r!*(n-r)!をmodで割った余り
+    b=1  # r! をmodで割った余り
     for i in range(1,r+1):
-        b*=i
-        b%=mod
-    for i in range(1,n-r+1):
         b*=i
         b%=mod
     
