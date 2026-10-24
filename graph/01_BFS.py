@@ -1,15 +1,12 @@
-#全ての辺の重みが0か1であるグラフに対して
-
-#https://atcoder.jp/contests/abc246/editorial/3702
+# 全ての辺の重みが0か1であるグラフに対するBFS
 
 from collections import deque
 
 def bfs01(s):
     dist[s]=0
     dq=deque()
-    dq.append(0)
+    dq.append(s)
     done=[False]*len(dist)
-
     while len(dq)>0:
         i=dq.popleft()
         if done[i]:
@@ -33,6 +30,5 @@ for _ in range(M):
     graph[a].append((b,c))
     graph[b].append((a,c))  #無向グラフの場合
 
-dist=[10**20]*N
-
-
+inf=10**18
+dist=[inf]*N
