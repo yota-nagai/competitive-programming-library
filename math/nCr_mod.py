@@ -1,5 +1,7 @@
-# nCr（n>=r）をmodで割った余りを計算
+# nCr を mod で割った余りを計算
 def nCr_mod(n,r,mod):
+    if not (0<=r<=n):
+        return 0
     r=min(r,n-r)
     a=1  
     for i in range(n-r+1,n+1):
