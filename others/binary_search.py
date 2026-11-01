@@ -34,6 +34,15 @@ def max_lt_idx(A,X):
     return res
         
 
+# 配列 A において, 値が L 以上 R 以下となる区間を返す
+# インデックスの半開区間 [l,r) で返す （区間が存在しなければ l = r）
+def range_idx(A,L,R):
+    l=bisect_left(A,L)
+    r=bisect_right(A,R)
+    return l,r
+
+
+
 # -----------------------------  要素取得  ----------------------------------------
 
 # 配列 A に含まれる, X 以上の数のうち最小のもの（存在しなければ None）を返す
@@ -83,6 +92,7 @@ def closest_vals(A,X):
         return [right_val]
     else:
         return [left_val,right_val]
+
 
 
 # ----------------------------  要素数カウント  -----------------------------------
