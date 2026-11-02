@@ -7,7 +7,8 @@ class UnionFind():
         self.size = [1]*n  # 各頂点が属する根付き木の頂点数を管理
         self.next_node=[i for i in range(n)]  # 同一グループ（根付き木）の頂点を巡回する際の, 次の頂点を管理
         self.group_cnt=n  # グループの数（根付き木の数）
-        # self.min_node=[i for i in range(n)]  # 各頂点が属する根付き木の頂点番号の最小値を管理
+        self.min_node=[i for i in range(n)]  # 各頂点が属する根付き木における, 頂点番号の最小値を管理
+        self.max_node=[i for i in range(n)]  # 各頂点が属する根付き木における, 頂点番号の最大値を管理
 
 	# xを含む根付き木の根番号を返す
     def root(self, x):
@@ -38,7 +39,8 @@ class UnionFind():
         self.size[x] += self.size[y]
         self.next_node[x],self.next_node[y]=self.next_node[y],self.next_node[x]
         self.group_cnt-=1
-        # self.min_node[x]=min(self.min_node[x],self.min_node[y])
+        self.min_node[x]=min(self.min_node[x],self.min_node[y])
+        self.max_node[x]=max(self.max_node[x],self.max_node[y])
         
 	# xが属する根付き木の要素数を返す
     def Size(self, x):
@@ -68,9 +70,13 @@ class UnionFind():
             group_members[self.root(member)].append(member)
         return group_members
 
-    # # xが属する根付き木における頂点番号の最小値
-    # def get_min_node(self,x):
-    #     return self.min_node[self.root(x)]
+    # xが属する根付き木における頂点番号の最小値を返す
+    def get_min_node(self,x):
+        return self.min_node[self.root(x)]
+
+    # xが属する根付き木における頂点番号の最大値を返す
+    def get_max_node(self,x):
+        return self.max_node[self.root(x)]
 
     # all_group_membersの結果を文字列で返す
     def __str__(self):
