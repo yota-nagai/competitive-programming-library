@@ -22,7 +22,7 @@ def restore_path(start,goal):
 
 N,M=map(int,input().split())
 
-dist=[[10**20]*N for _ in range(N)]
+dist=[[10**18]*N for _ in range(N)]
 next_node=[[-1]*N for _ in range(N)]  #next_node[i][j]：iからjへ行く最短経路における最初の経由地
 
 for i in range(N):
@@ -38,5 +38,5 @@ for _ in range(M):
     next_node[v][u]=u  #無向グラフの場合のみ
 
 #floyd_warshall(start)
-#dist[i][j]>=10**18ならばiからjへの到達不可能と判定
+#dist[i][j]>=10**16ならばiからjへの到達不可能と判定
 #dist[i][i]<0なら負の閉路が存在
