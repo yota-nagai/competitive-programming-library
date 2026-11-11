@@ -32,10 +32,11 @@ for _ in range(M):
     u,v,c=map(int,input().split())
     u-=1
     v-=1
-    dist[u][v]=c
-    dist[v][u]=c  #無向グラフの場合のみ
+    dist[u][v]=min(dist[u][v],c)
+    dist[v][u]=min(dist[v][u],c)  #無向グラフの場合のみ
     next_node[u][v]=v 
     next_node[v][u]=u  #無向グラフの場合のみ
+
 
 #floyd_warshall(start)
 #dist[i][j]>=10**16ならばiからjへの到達不可能と判定
