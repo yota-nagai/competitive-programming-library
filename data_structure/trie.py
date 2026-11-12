@@ -29,3 +29,12 @@ class Trie:
                 return 0
             node=node.children[char]
         return node.end_cnt
+
+    def count_prefix(self,prefix):
+        """指定した接頭辞をもつ文字列の登録数を返す"""
+        node=self.root
+        for char in prefix:
+            if char not in node.children:
+                return 0
+            node=node.children[char]
+        return node.pass_cnt
