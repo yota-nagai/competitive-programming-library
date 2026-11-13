@@ -55,3 +55,28 @@ class Trie:
             else:
                 break
         return "".join(res)
+
+    def get_lcp_sum(self,word,case):
+        """
+        ・単語 word に対して, 「Trieが保持する単語との最長共通接頭辞（LCP）」の長さの総和を返す
+        ・単語群 S_1,...,S_n （重複ok）が Trie に保持されているときに,
+            case = 1 : 与えられた単語 T（任意の文字列）について, 単語 S_1,...,S_n とのLCPの長さの総和を得るケース   
+            case = 2 : 各 S_i について, 他の単語 S_j (i≠j) とのLCPの長さの総和を得るケース
+        """
+        node=self.root
+        depth=0
+        res=0
+        for i in range(len(word)):
+            char=word[i]
+            if (char in node.children) and (node.children[char].pass_cnt>0):
+                res+=(node.pass_cnt-node.children[char].pass_cnt-node.end_cnt)*depth   # 進まない分岐先の分
+                node=node.children[char]
+                depth+=1
+                if i==len(word)-1:
+                    res+=(node.end_cnt-(case-1))*depth
+                else:
+                    res+=node.end_cnt*depth
+            else:
+                break
+        res+=(node.pass_cnt-node.end_cnt)*depth
+        return res
