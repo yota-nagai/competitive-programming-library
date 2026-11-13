@@ -38,3 +38,20 @@ class Trie:
                 return 0
             node=node.children[char]
         return node.pass_cnt
+
+    def get_max_lcp(self,word,case): 
+        """
+        ・単語 word に対して, 「Trieが保持する単語との最長共通接頭辞（LCP）」のうち最長のものを返す
+        ・単語群 S_1,...,S_n （重複ok）が Trie に保持されているときに,
+            case = 1 : 与えられた単語 T（任意の文字列）について, 単語 S_1,...,S_n とのLCPのうち最長のものを探すケース   
+            case = 2 : 各 S_i について, 他の単語 S_j (i≠j) とのLCPのうち最長のものを探すケース
+        """
+        node=self.root
+        res=[]
+        for char in word:
+            if (char in node.children) and (node.children[char].pass_cnt>=case):
+                node=node.children[char]
+                res.append(char)
+            else:
+                break
+        return "".join(res)
