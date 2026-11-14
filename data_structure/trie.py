@@ -53,6 +53,27 @@ class Trie:
             res.append(node)
         return res
 
+    def delete_prefix(self,prefix):
+        """prefixを接頭辞としてもつ単語をすべて削除して, 削除した数を返す"""
+        if len(prefix)==0:
+            return 0
+        path=self.get_path(prefix)
+        if len(path)!=len(prefix):
+            return 0
+        prefix_last=path[-1]
+        remove_cnt=prefix_last.pass_cnt
+        # 根から "prefixの終点の1つ前の頂点" までのpass_cntを更新
+        self.root.pass_cnt-=remove_cnt
+        for node in path[:-1]:
+            node.pass_cnt-=remove_cnt
+        # "prefixの終点の1つ前の頂点" と "prefixの終点" を結ぶ辺を切断
+        char=prefix[-1]
+        if len(prefix)==1:
+            del self.root.children[char]
+        else:
+            del path[-2].children[char]
+        return remove_cnt
+
     def get_max_lcp(self,word,case): 
         """
         ・単語 word に対して, 「Trieが保持する単語との最長共通接頭辞（LCP）」のうち最長のものを返す
