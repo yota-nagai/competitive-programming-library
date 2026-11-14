@@ -53,6 +53,15 @@ class Trie:
             res.append(node)
         return res
 
+    def delete_word(self,word,k):
+        """単語 word を k 個 削除する   ※その操作が可能であることをcount_word()により確認してから使用する"""
+        node=self.root
+        node.pass_cnt-=k
+        for char in word:
+            node=node.children[char]
+            node.pass_cnt-=k
+        node.end_cnt-=k
+
     def delete_prefix(self,prefix):
         """prefixを接頭辞としてもつ単語をすべて削除して, 削除した数を返す"""
         if len(prefix)==0:
