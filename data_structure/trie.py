@@ -39,6 +39,20 @@ class Trie:
             node=node.children[char]
         return node.pass_cnt
 
+    def get_path(self,word):
+        """
+        ・単語 word をTrie上で辿ったときに通る経路を, [word[0]に対応するTrieNode, word[1]に対応するTrieNode, ...] で返す
+        ・word の最後まで辿れた（len(返したリスト) = len(word) となる）場合, それ以降の頂点までを辿って得られる文字列は word を接頭辞としてもつ
+        """
+        node=self.root
+        res=[]
+        for char in word:
+            if char not in node.children:
+                return res
+            node=node.children[char]
+            res.append(node)
+        return res
+
     def get_max_lcp(self,word,case): 
         """
         ・単語 word に対して, 「Trieが保持する単語との最長共通接頭辞（LCP）」のうち最長のものを返す
