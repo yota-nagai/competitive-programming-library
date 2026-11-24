@@ -2,6 +2,7 @@ import sys
 sys.setrecursionlimit(10**8)
 
 # 木の直径：木の中で最も離れた2頂点間の距離 
+# 任意の頂点vについて, 木の直径の端点 p1,p2 のいずれかはvから最も遠い
 
 def tree_diameter(graph,weighted):
     """ 
