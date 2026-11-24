@@ -56,6 +56,29 @@ class LCA:
         """ 頂点uと頂点vを結ぶパス上に頂点aが存在するか（True/False）を返す """
         return self.get_dist(u,a)+self.get_dist(a,v)==self.get_dist(u,v) 
 
+    def kth_ancestor(self,v,k):
+        """ 頂点vのk個上の祖先（存在しないなら-1）を返す """
+        if self.depth[v]<k:
+            return -1
+        pos=v
+        for i in range(self.K):
+            if k&(1<<i):
+                pos=self.parent[i][pos]
+        return pos
+
+    def jump(self,u,v,k):
+        """ 頂点uから頂点vへ向かってk個分進んだ先の頂点（u-->vのパスに収まらなければ-1）を返す """
+        if k>self.get_dist(u,v):
+            return -1
+        lca=self.get_lca(u,v)
+        d=self.get_dist(u,lca)
+        if k<=d:
+            return self.kth_ancestor(u,k)
+        else:
+            return self.kth_ancestor(v,self.get_dist(v,lca)-(k-d))  
+
+
+
 # ------------------------------------------------------------
 N=int(input())
 graph=[[] for _ in range(N)]
