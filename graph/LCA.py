@@ -47,7 +47,14 @@ class LCA:
                 v=self.parent[k][v]
         return self.parent[0][u]
 
+    def get_dist(self,u,v):
+        """ 頂点uと頂点vの距離を返す """
+        lca=self.get_lca(u,v)
+        return self.depth[u]+self.depth[v]-2*self.depth[lca]
 
+    def is_on_path(self,u,v,a):
+        """ 頂点uと頂点vを結ぶパス上に頂点aが存在するか（True/False）を返す """
+        return self.get_dist(u,a)+self.get_dist(a,v)==self.get_dist(u,v) 
 
 # ------------------------------------------------------------
 N=int(input())
