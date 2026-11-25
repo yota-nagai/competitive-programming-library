@@ -6,7 +6,6 @@ from atcoder.segtree import SegTree
 
 A=list(map(int,input().split()))
 
-
 # 区間最大値
 seg=SegTree(max,-10**18,A)
 
@@ -30,3 +29,26 @@ seg=SegTree(lcm,1,A)
 seg=SegTree(lambda x,y:x&y,-1,A)   # AND
 seg=SegTree(lambda x,y:x|y,0,A)    # OR
 seg=SegTree(lambda x,y:x^y,0,A)    # XOR
+
+
+# ---------------------------- セグ木上の二分探索 ----------------------------------
+L,R,x=map(int,input().split())
+
+# L 以上で最小のインデックス i（なければ N）       <条件>
+seg=SegTree(max,-10**18,A)
+seg.max_right(L,lambda p:p<x)                # A[i] >= x
+seg.max_right(L,lambda p:p<=x)               # A[i] > x
+
+seg=SegTree(min,10**18,A)
+seg.max_right(L,lambda p:p>x)                # A[i] <= x
+seg.max_right(L,lambda p:p>=x)               # A[i] < x
+
+
+# R 以下で最大のインデックス i（なければ -1）      <条件>
+seg=SegTree(max,-10**18,A)
+seg.min_left(R+1,lambda p:p<x)-1             # A[i] >= x 
+seg.min_left(R+1,lambda p:p<=x)-1            # A[i] > x
+
+seg=SegTree(min,10**18,A)
+seg.min_left(R+1,lambda p:p>x)-1             # A[i] <= x
+seg.min_left(R+1,lambda p:p>=x)-1            # A[i] < x
