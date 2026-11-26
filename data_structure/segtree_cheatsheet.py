@@ -31,9 +31,10 @@ seg=SegTree(lambda x,y:x|y,0,A)    # OR
 seg=SegTree(lambda x,y:x^y,0,A)    # XOR
 
 
-# ---------------------------- セグ木上の二分探索 ----------------------------------
+### --------------------------- セグ木上の二分探索 ------------------------------- ###
 L,R,x=map(int,input().split())
 
+""" 要素の二分探索 """
 # L 以上で最小のインデックス i（なければ N）       <条件>
 seg=SegTree(max,-10**18,A)
 seg.max_right(L,lambda p:p<x)                # A[i] >= x
@@ -43,7 +44,6 @@ seg=SegTree(min,10**18,A)
 seg.max_right(L,lambda p:p>x)                # A[i] <= x
 seg.max_right(L,lambda p:p>=x)               # A[i] < x
 
-
 # R 以下で最大のインデックス i（なければ -1）      <条件>
 seg=SegTree(max,-10**18,A)
 seg.min_left(R+1,lambda p:p<x)-1             # A[i] >= x 
@@ -52,3 +52,15 @@ seg.min_left(R+1,lambda p:p<=x)-1            # A[i] > x
 seg=SegTree(min,10**18,A)
 seg.min_left(R+1,lambda p:p>x)-1             # A[i] <= x
 seg.min_left(R+1,lambda p:p>=x)-1            # A[i] < x
+
+
+""" 区間和の二分探索   ※ 前提:配列要素がすべて非負 """
+seg=SegTree(lambda x,y:x+y,0,A)
+
+# A[L]から右方向の区間和が条件を満たす最小インデックス i（なければ N）
+seg.max_right(L,lambda p:p<x)                # sum(A[L],...,A[i]) >= x   ※ x>0
+seg.max_right(L,lambda p:p<=x)               # sum(A[L],...,A[i]) > x    ※ x>=0
+
+# A[R]から左方向の区間和が条件を満たす最大インデックス i（なければ -1） 
+seg.min_left(R+1,lambda p:p<x)-1             # sum(A[i],...,A[R]) >= x   ※ x>0
+seg.min_left(R+1,lambda p:p<=x)-1            # sum(A[i],...,A[R]) > x    ※ x>=0
