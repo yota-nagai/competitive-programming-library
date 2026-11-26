@@ -8,9 +8,17 @@ A=list(map(int,input().split()))
 
 # 区間最大値
 seg=SegTree(max,-10**18,A)
+# 区間最大値mx + その最小インデックスidx  ※取得: mx,idx=seg.prod(L,R) → idx=-idx / 更新: seg.set(i,(x,-i))
+seg=SegTree(max,(-10**18,-10**18),[(a,-i) for i,a in enumerate(A)])  
+# 区間最大値mx + その最大インデックスidx  ※取得: mx,idx=seg.prod(L,R) / 更新: seg.set(i,(x,i))
+seg=SegTree(max,(-10**18,-10**18),[(a,i) for i,a in enumerate(A)]) 
 
 # 区間最小値
 seg=SegTree(min,10**18,A)
+# 区間最小値mn + その最小インデックスidx  ※取得: mn,idx=seg.prod(L,R) / 更新: seg.set(i,(x,i))
+seg=SegTree(min,(10**18,10**18),[(a,i) for i,a in enumerate(A)])
+# 区間最小値mn + その最大インデックスidx  ※取得: mn,idx=seg.prod(L,R) → idx=-idx / 更新: seg.set(i,(x,-i))
+seg=SegTree(min,(10**18,10**18),[(a,-i) for i,a in enumerate(A)])
 
 # 区間和
 seg=SegTree(lambda x,y:x+y,0,A)
